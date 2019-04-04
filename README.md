@@ -24,7 +24,7 @@ yarn add contentful-sitemap
 ```
 
 
-## How to use {#}
+## How to use
 
 `contentful-sitemap` requires a Contentful client in order to fetch entries from
 your Contenful space in order to build your dynamic sitemap entries. So, make sure
