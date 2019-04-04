@@ -59,6 +59,7 @@
     "babel-polyfill": "^6.26.0",
     "contentful": "^7.5.0",
     "coveralls": "^3.0.3",
+    "greenkeeper-lockfile": "^1.15.1",
     "gzip-size": "^5.0.0",
     "jest": "^24.5.0",
     "pretty-bytes": "^5.1.0",
