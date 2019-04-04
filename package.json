@@ -1,0 +1,81 @@
+{
+  "name": "contentful-sitemap",
+  "version": "0.1.0",
+  "description": "Easily generate a sitemap.xml file that consists of both static routes and dynamic routes generated from Contentful content.",
+  "repository": "ryanhefner/contentful-sitemap",
+  "keywords": [
+    "sitemap",
+    "sitemap.xml",
+    "contentful",
+    "contentful-api"
+  ],
+  "author": "Ryan Hefner <hi@ryanhefner.com> (https://www.ryanhefner.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryanhefner/contentful-sitemap/issues"
+  },
+  "homepage": "https://github.com/ryanhefner/contentful-sitemap#readme",
+  "files": [
+    "es",
+    "src",
+    "umd",
+    "index.js"
+  ],
+  "directories": {
+    "lib": "/src"
+  },
+  "main": "index.js",
+  "module": "es/index.js",
+  "jsnext:main": "src/index.js",
+  "scripts": {
+    "clean": "rm -f index.js && rm -rf es && rm -rf umd",
+    "prebuild": "npm run clean",
+    "build": "node ./tools/build.js",
+    "watch": "babel ./src -d . --ignore __mocks__,__tests__,**/*.test.js --watch",
+    "prepare": "npm run build",
+    "prepublishOnly": "node ./tools/build.js",
+    "push-release": "git push origin master && git push --tags",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.2",
+    "invariant": "^2.2.4",
+    "lodash.get": "^4.4.2",
+    "lodash.has": "^4.5.2",
+    "path-to-regexp": "^3.0.0",
+    "sitemap": "^2.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/plugin-transform-runtime": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^24.5.0",
+    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "babel-polyfill": "^6.26.0",
+    "contentful": "^7.5.0",
+    "coveralls": "^3.0.3",
+    "gzip-size": "^5.0.0",
+    "jest": "^24.5.0",
+    "pretty-bytes": "^5.1.0",
+    "regenerator-runtime": "^0.13.2",
+    "rollup": "^1.7.3",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.2.2",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-uglify": "^6.0.2",
+    "rollup-watch": "^4.3.1"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/**/*.test.js"
+    ]
+  }
+}
