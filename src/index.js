@@ -254,6 +254,11 @@ class ContentfulSitemap {
   async parseRoutes() {
     try {
       const routes = this.routes.map(async (route) => {
+        if (route.id && this.options.dynamicLastmod) {
+          const entry = await this.loadEntry(route.id);
+          route.lastmodISO = this.options.dynamicLastmod ? get(entry, 'sys.updatedAt') : null;
+        }
+
         if (route.pattern) {
           const toPath = pathToRegexp.compile(route.pattern);
           const params = {};
@@ -269,23 +274,6 @@ class ContentfulSitemap {
             return queryRoutes;
           }
 
-          if (route.id) {
-            const entry = await this.loadEntry(route.id);
-
-            if (this.filterEntry(entry, route, params)) {
-              const entryParams = this.buildEntryParams(entry, route, params);
-
-              return [{
-                ...route,
-                url: toPath(entryParams),
-                lastmodISO: this.options.dynamicLastmod ? get(entry, 'sys.updatedAt') : null,
-                links: this.buildLocaleLinks(toPath, entryParams),
-              }];
-            }
-
-            return null;
-          }
-
           try {
             return [{
               ...route,
@@ -298,19 +286,7 @@ class ContentfulSitemap {
           }
         }
 
-        if (route.url) {
-          if (route.id && this.options.dynamicLastmod) {
-            const entry = await this.loadEntry(route.id);
-            return [{
-              ...route,
-              lastmodISO: this.options.dynamicLastmod ? get(entry, 'sys.updatedAt') : null,
-            }];
-          }
-
-          return Promise.resolve([route]);
-        }
-
-        return null;
+        return Promise.resolve([route]);
       })
       .filter(route => route !== null)
       .reduce((acc, cur) => {
@@ -331,6 +307,7 @@ class ContentfulSitemap {
    * @return Promise
    */
   async toXML(callback) {
+    // If dynamicLocales set, load locales from Contentful and populate properties/defaults
     if (this.options.dynamicLocales) {
       const locales = await this.loadLocales();
       this.options.locales = locales.items.map((item) => {
@@ -342,8 +319,10 @@ class ContentfulSitemap {
       });
     }
 
+    // Parse the routes array
     const routes = await this.parseRoutes();
 
+    // Resolve all the routes and generate the sitemap
     return Promise.all(routes)
       .then((routes) => {
         routes.reduce((acc, cur) => {
