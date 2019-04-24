@@ -18,6 +18,7 @@
   "files": [
     "es",
     "src",
+    "types",
     "umd",
     "index.js"
   ],
@@ -27,6 +28,7 @@
   "main": "index.js",
   "module": "es/index.js",
   "jsnext:main": "src/index.js",
+  "types": "types",
   "scripts": {
     "clean": "rm -f index.js && rm -rf es && rm -rf umd",
     "prebuild": "npm run clean",
@@ -35,6 +37,7 @@
     "prepare": "npm run build",
     "prepublishOnly": "node ./tools/build.js",
     "push-release": "git push origin master && git push --tags",
+    "dtslint": "dtslint types",
     "test": "jest"
   },
   "dependencies": {
@@ -59,6 +62,7 @@
     "babel-polyfill": "^6.26.0",
     "contentful": "^7.5.0",
     "coveralls": "^3.0.3",
+    "dtslint": "^0.7.0",
     "greenkeeper-lockfile": "^1.15.1",
     "gzip-size": "^5.1.0",
     "jest": "^24.7.1",
