@@ -121,7 +121,7 @@ class ContentfulSitemap {
   buildLocaleLinks(toPath, params = {}) {
     return this.options.locales.map((locale) => {
       return {
-        url: toPath({ ...params, locale }),
+        url: decodeURIComponent(toPath({ ...params, locale })),
         lang: locale,
       };
     });
@@ -191,7 +191,7 @@ class ContentfulSitemap {
     if (route.params) {
       Object.keys(route.params).forEach((param) => {
         const paramPath = route.params[param];
-        entryParams[param] = get(entry, paramPath) ? decodeURIComponent(get(entry, paramPath)) : null;
+        entryParams[param] = get(entry, paramPath);
       });
     }
 
@@ -233,7 +233,7 @@ class ContentfulSitemap {
 
           routes.push({
             ...route,
-            url: toPath(entryParams),
+            url: decodeURIComponent(toPath(entryParams)),
             lastmodISO: this.options.dynamicLastmod ? get(entry, 'sys.updatedAt') : null,
             links: this.buildLocaleLinks(toPath, entryParams),
           });
@@ -277,7 +277,7 @@ class ContentfulSitemap {
           try {
             return [{
               ...route,
-              url: toPath(params),
+              url: decodeURIComponent(toPath(params)),
               links: this.buildLocaleLinks(toPath, params),
             }];
           } catch (e) {
