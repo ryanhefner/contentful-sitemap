@@ -231,11 +231,17 @@ class ContentfulSitemap {
         .forEach((entry) => {
           const entryParams = this.buildEntryParams(entry, route, params);
 
+          if (this.options.dynamicLastmod) {
+            route.lastmodISO = get(entry, 'sys.updatedAt');
+          }
+
+          if (this.options.dynamicLocales) {
+            route.links = this.buildLocaleLinks(toPath, entryParams);
+          }
+
           routes.push({
             ...route,
             url: decodeURIComponent(toPath(entryParams)),
-            lastmodISO: this.options.dynamicLastmod ? get(entry, 'sys.updatedAt') : null,
-            links: this.buildLocaleLinks(toPath, entryParams),
           });
         });
 
@@ -256,7 +262,7 @@ class ContentfulSitemap {
       const routes = this.routes.map(async (route) => {
         if (route.id && this.options.dynamicLastmod) {
           const entry = await this.loadEntry(route.id);
-          route.lastmodISO = this.options.dynamicLastmod ? get(entry, 'sys.updatedAt') : null;
+          route.lastmodISO = get(entry, 'sys.updatedAt');
         }
 
         if (route.pattern) {
@@ -275,10 +281,13 @@ class ContentfulSitemap {
           }
 
           try {
+            if (this.options.dynamicLocales) {
+              route.links = this.buildLocaleLinks(toPath, params);
+            }
+
             return [{
               ...route,
               url: decodeURIComponent(toPath(params)),
-              links: this.buildLocaleLinks(toPath, params),
             }];
           } catch (e) {
             // Skip the route if things do not lineup
