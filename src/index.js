@@ -191,7 +191,7 @@ class ContentfulSitemap {
     if (route.params) {
       Object.keys(route.params).forEach((param) => {
         const paramPath = route.params[param];
-        entryParams[param] = get(entry, paramPath);
+        entryParams[param] = get(entry, paramPath) ? decodeURIComponent(get(entry, paramPath)) : null;
       });
     }
 
