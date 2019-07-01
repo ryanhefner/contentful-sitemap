@@ -46,7 +46,7 @@
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",
     "path-to-regexp": "^3.0.0",
-    "sitemap": "^2.2.0"
+    "sitemap": "^3.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
