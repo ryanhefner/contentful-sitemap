@@ -41,7 +41,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.5",
+    "@babel/runtime": "^7.5.4",
     "invariant": "^2.2.4",
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",
@@ -49,15 +49,15 @@
     "sitemap": "^3.2.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
-    "@babel/plugin-transform-runtime": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/plugin-transform-runtime": "^7.5.0",
+    "@babel/preset-env": "^7.5.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.8.0",
-    "babel-plugin-dev-expression": "^0.2.1",
+    "babel-plugin-dev-expression": "^0.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-polyfill": "^6.26.0",
     "contentful": "^7.8.1",
@@ -68,14 +68,14 @@
     "jest": "^24.8.0",
     "pretty-bytes": "^5.2.0",
     "regenerator-runtime": "^0.13.2",
-    "rollup": "^1.16.2",
+    "rollup": "^1.16.7",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.1",
     "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-uglify": "^6.0.2",
     "rollup-watch": "^4.3.1",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   },
   "jest": {
     "collectCoverage": true,
