@@ -1,6 +1,6 @@
 {
   "name": "contentful-sitemap",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Easily generate a sitemap.xml file that consists of both static routes and dynamic routes generated from Contentful content.",
   "repository": "ryanhefner/contentful-sitemap",
   "keywords": [
