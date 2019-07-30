@@ -40,6 +40,9 @@
     "dtslint": "dtslint types",
     "test": "jest"
   },
+  "peerDependencies": {
+    "contentful": ">=7.0"
+  },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
     "invariant": "^2.2.4",
