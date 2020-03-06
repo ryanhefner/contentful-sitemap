@@ -71,7 +71,7 @@
     "jest": "^24.8.0",
     "pretty-bytes": "^5.3.0",
     "regenerator-runtime": "^0.13.3",
-    "rollup": "^1.19.4",
+    "rollup": "^2.0.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.0.2",
     "rollup-plugin-json": "^4.0.0",
