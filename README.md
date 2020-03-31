@@ -155,8 +155,12 @@ const sitemap = new ContentfulSitemap([
   }
 ], client);
 
+// You can use the sitemap API with a callback
+// Note: different order of toXML() response variables
+// using the callback approach, the xml is the second variable
+
 app.get('/sitemap.xml', (req, res) => {
-  sitemap.toXML((xml, err) => {
+  sitemap.toXML((err, xml) => {
     if (err) {
       return res.status(500).end();
     }
@@ -164,6 +168,16 @@ app.get('/sitemap.xml', (req, res) => {
     res.header('Content-Type', 'application/xml');
     res.send(xml);
   });
+});
+
+// OR async await approach
+
+app.get('/sitemap.xml', async (req, res) => {
+  const sitemapXML = await sitemap.toXML();
+  if (!sitemapXML) return res.status(500).end();
+
+  res.header('Content-Type', 'application/xml');
+  res.send(sitemapXML);
 });
 
 ...
