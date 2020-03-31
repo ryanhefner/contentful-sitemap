@@ -166,7 +166,7 @@ app.get('/sitemap.xml', (req, res) => {
     }
 
     res.header('Content-Type', 'application/xml');
-    res.send(xml);
+    return res.send(xml);
   });
 });
 
