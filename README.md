@@ -177,7 +177,7 @@ app.get('/sitemap.xml', async (req, res) => {
   if (!sitemapXML) return res.status(500).end();
 
   res.header('Content-Type', 'application/xml');
-  res.send(sitemapXML);
+  return res.send(sitemapXML);
 });
 
 ...
