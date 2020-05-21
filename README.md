@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/l/express.svg)](LICENSE)
 [![Coverage Status](https://coveralls.io/repos/github/ryanhefner/contentful-sitemap/badge.svg?branch=master)](https://coveralls.io/github/ryanhefner/contentful-sitemap?branch=master)
 [![CircleCI](https://circleci.com/gh/ryanhefner/contentful-sitemap.svg?style=shield)](https://circleci.com/gh/ryanhefner/contentful-sitemap)
-[![Greenkeeper badge](https://badges.greenkeeper.io/ryanhefner/contentful-sitemap.svg)](https://greenkeeper.io/)
+
 
 Build a dynamic `sitemap.xml` file based on content pulled in from Contentful
 via the Contentful API.
