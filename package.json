@@ -51,7 +51,7 @@
     "lodash.has": "^4.5.2",
     "path-to-regexp": "^3.2.0",
     "sitemap": "^2.2.0",
-    "snyk": "^1.323.1"
+    "snyk": "^1.323.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
