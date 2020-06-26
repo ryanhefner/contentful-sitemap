@@ -1,6 +1,6 @@
 // TypeScript Version: 3.0
 
-import { ContentfulClientApi } from 'contentful';
+import * as contentful from 'contentful';
 
 export interface RouteConfig {
   url?: string;
@@ -21,13 +21,20 @@ export interface OptionsInterface {
   locales?: string[];
   dynamicLocales?: boolean;
   dynamicLastmod?: boolean;
-  origin?: string;
   localeParam?: string;
   defaultLocale?: string;
 }
 
 export class ContentfulSitemap {
-  constructor(routes: RoutesInterface, client: ContentfulClientApi, options: OptionsInterface);
+  route: RouteConfig;
+  routes: RoutesInterface;
+  options: OptionsInterface;
+
+  constructor(
+    client: contentful.ContentfulClientApi,
+    routes?: RoutesInterface,
+    options?: OptionsInterface
+  );
 
   addRoute(route: RouteConfig): ContentfulSitemap;
 
@@ -37,15 +44,15 @@ export class ContentfulSitemap {
 
   loadEntries(): Promise<any>;
 
-  buildLocaleLinks(toPath: () => {}, params: object): RouteConfig[];
+  buildLocaleLinks(toPath: () => void, params: object): RouteConfig[];
 
   filterEntry(entry: object, route: RouteConfig, params: object): boolean;
 
   buildEntryParams(entry: object, route: RouteConfig, params: object): RouteConfig;
 
-  handleQueryRoute(route: RouteConfig, toPath: () => {}, params: object): Promise<RouteConfig>;
+  handleQueryRoute(route: RouteConfig, toPath: () => void, params: object): Promise<RouteConfig>;
 
   parseRoutes(): Array<Promise<any>>;
 
-  toXML(callback: () => {}): Promise<any>;
+  buildRoutes(): Promise<any[]>;
 }
