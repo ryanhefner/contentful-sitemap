@@ -109,7 +109,7 @@ in your routes.
 
 * `buildRoutes()` - The magic✨ Call this method when you want to generate your Contentful routes to be passed to `sitemap`.
 
-* `toXML((xml, err))` - __*DEPRECATED*__ - This was the previous method that this class used to build and return the full `sitemap.xml` string, but due to changes made to the `sitemap` package it seemed like it would be easier to support the current—and future—versions of that package by simplifying this package to do one thing well, while offering more flexibility with how you would like to use `sitemap` to generate your sitemap(s).
+* `toXML((xml, err) => {})` - __*DEPRECATED*__ - This was the previous method that this class used to build and return the full `sitemap.xml` string, but due to changes made to the `sitemap` package it seemed like it would be easier to support the current—and future—versions of that package by simplifying this package to do one thing well, while offering more flexibility with how you would like to use `sitemap` to generate your sitemap(s).
 
 ## Example
 
