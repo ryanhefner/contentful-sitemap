@@ -2,6 +2,7 @@ const pathToRegexp = require('path-to-regexp');
 const invariant = require('invariant');
 const has = require('lodash.has');
 const get = require('lodash.get');
+const { SitemapStream, streamToPromise } = require('sitemap');
 
 /**
  * Validate client object matches expected shape of Contentful client.
@@ -351,6 +352,26 @@ export class ContentfulSitemap {
           return acc.concat(cur);
         }, []);
       });
+  }
+
+  /**
+   * !!!DEPRECATED!!! - Do not use.
+   *
+   * Calls callback with generated sitemap.xml file or error.
+   *
+   * @param {function} callback
+   * @return void
+   */
+  toXML(callback) {
+    this.buildRoutes()
+      .then(routes => {
+        const smStream = new SitemapStream({ hostname: this.options.origin });
+        routes.forEach(route => smStream.write(route));
+        smStream.end();
+
+        streamToPromise(smStream).then(data => callback(data.toString(), null));
+      })
+      .catch(err => callback(null, err));
   }
 }
 
