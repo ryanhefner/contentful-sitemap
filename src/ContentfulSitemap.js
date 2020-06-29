@@ -222,7 +222,7 @@ export class ContentfulSitemap {
    */
   async handleQueryRoute(route, toPath, params = {}) {
     const query = Object.assign({}, route.query, {
-      select: `${route.query.select || ''}${this.options.dynamicLastmod ? ',sys.updatedAt' : ''}`
+      select: `${route.query.select || ''}${this.options.dynamicLastmod ? `,${this.options.lastmodParam}` : ''}`
     })
 
     try {
@@ -246,7 +246,7 @@ export class ContentfulSitemap {
           const entryParams = this.buildEntryParams(entry, route, params);
 
           if (this.options.dynamicLastmod) {
-            route.lastmodISO = get(entry, 'sys.updatedAt');
+            route.lastmodISO = get(entry, this.options.lastmodParam);
           }
 
           if (this.options.dynamicLocales) {
@@ -276,7 +276,7 @@ export class ContentfulSitemap {
       const routes = this.routes.map(async (route) => {
         if (route.id && this.options.dynamicLastmod) {
           const entry = await this.loadEntry(route.id);
-          route.lastmodISO = get(entry, 'sys.updatedAt');
+          route.lastmodISO = get(entry, this.options.lastmodParam);
         }
 
         if (route.pattern) {
@@ -370,6 +370,7 @@ ContentfulSitemap.prototype.options = {
   dynamicLocales: false,
   dynamicLastmod: false,
   origin: '',
+  lastmodParam: 'sys.updatedAt',
   localeParam: 'locale',
   defaultLocale: null,
 };
