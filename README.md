@@ -40,7 +40,7 @@ __Create Contentful client__
 
 ```js
 const contentful = require('contentful');
-const ContentfulSitemap = require('contentful-sitemap');
+const { ContentfulSitemap } = require('contentful-sitemap');
 
 const client = contentful.createClient({
   accessToken: '[ACCESS_TOKEN]',
@@ -98,7 +98,8 @@ in your routes.
 | ----------------- | ------------------- | ------------------------------------------------------------------------------------- |
 | `locales`         | `[]`                | Array of locales to include for all route instances, if not using `dynamicLocales`.   |
 | `dynamicLocales`  | `false`             | Whether or not to fetch the list of enabled `locales` from Contentful.                |
-| `dynamicLastmod`  | `false`             | Automatically use the `sys.updatedAt` value of each entry to set the `lastmod` value. |
+| `dynamicLastmod`  | `false`             | Automatically use the `lastmodParam` value of each entry to set the `lastmod` value.  |
+| `lastmodParam`    | `sys.updatedAt`     | Contentful model field to use when populating `lastmodISO` in route(s).               |
 | `localeParam`     | `locale`            | The param to set within your `pattern` to replace with a `locale`.                    |
 | `defaultLocale`   | `null`              | The default locale that will be used in the main `loc` value for a `url`.             |
 
