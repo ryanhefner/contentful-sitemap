@@ -55,4 +55,6 @@ export class ContentfulSitemap {
   parseRoutes(): Array<Promise<any>>;
 
   buildRoutes(): Promise<any[]>;
+
+  toXML(callback: () => {}): void;
 }
