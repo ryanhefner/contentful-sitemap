@@ -1,13 +1,13 @@
 # 🗺 contentful-sitemap
 
-[![npm version](https://badge.fury.io/js/contentful-sitemap.svg)](https://badge.fury.io/js/contentful-sitemap)
-[![npm](https://img.shields.io/npm/l/express.svg)](LICENSE)
-[![Coverage Status](https://coveralls.io/repos/github/ryanhefner/contentful-sitemap/badge.svg?branch=master)](https://coveralls.io/github/ryanhefner/contentful-sitemap?branch=master)
-[![CircleCI](https://circleci.com/gh/ryanhefner/contentful-sitemap.svg?style=shield)](https://circleci.com/gh/ryanhefner/contentful-sitemap)
+[![npm](https://img.shields.io/npm/v/contentful-sitemap?style=flat-square)](https://www.pkgstats.com/pkg:contentful-sitemap)
+[![NPM](https://img.shields.io/npm/l/contentful-sitemap?style=flat-square)](LICENSE)
+[![npm](https://img.shields.io/npm/dt/contentful-sitemap?style=flat-square)](https://www.pkgstats.com/pkg:contentful-sitemap)
+[![Coveralls github](https://img.shields.io/coveralls/github/ryanhefner/contentful-sitemap?style=flat-square)](https://coveralls.io/github/ryanhefner/contentful-sitemap)
+[![CircleCI](https://img.shields.io/circleci/build/github/ryanhefner/contentful-sitemap?style=flat-square)](https://circleci.com/gh/ryanhefner/contentful-sitemap)
+![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/ryanhefner/contentful-sitemap?style=flat-square)
 
-
-Build a dynamic `sitemap.xml` file based on content pulled in from Contentful
-via the Contentful API.
+Dynamically generate an array of valid `sitemap` routes to enable building a live sitemap based on Contentful content via the Contentful API.
 
 ## Install
 
@@ -55,24 +55,27 @@ a `client` instance, so make sure you pass one into the constructor.
 __Create `ContentfulSitemap` instance__
 
 ```js
-const sitemap = new ContentfulSitemap([], client, {options});
+const sitemapGenerator = new ContentfulSitemap(client, [routes], {options});
 ```
 
 ### Parameters
 
-* `routes` - Array of route definitions to use to generate sitemap.
-
 * `client` - Contentful client that will be used for fetching locales and entries from Contentful.
+
+* `routes` - Array of route definitions to use to generate sitemap.
 
 * `options` - Options that you can use to customize how sitemaps are generated.
 
 
 ### Routes
 
-`contentful-sitemap` uses the [`sitemap`](https://npmjs.com/package/sitemap) package
-behind the scenes to generate the final XML that is returned, so all `route` options
-supported by that package are also supported. Below are the few specifics that directly
-relate to how `contentful-sitemap` will process your `routes` entries.
+`contentful-sitemap` generates a route array that is compatible with the
+[`sitemap`](https://npmjs.com/package/sitemap) package for generating your
+`sitemap.xml` file, so all `route` options supported by that package are
+also supported within the `routes` array you pass in. You can pass in both
+static and dynamic Contentful routes within the array. Below are the few
+specifics that directly relate to how `contentful-sitemap` will process
+your `routes` entries.
 
 | Name              | Default             | Description                                                                                                                                                                 |
 | ----------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -96,7 +99,6 @@ in your routes.
 | `locales`         | `[]`                | Array of locales to include for all route instances, if not using `dynamicLocales`.   |
 | `dynamicLocales`  | `false`             | Whether or not to fetch the list of enabled `locales` from Contentful.                |
 | `dynamicLastmod`  | `false`             | Automatically use the `sys.updatedAt` value of each entry to set the `lastmod` value. |
-| `origin`          | `''`                | The `origin` to prefix each `url` or `pattern` with.                                  |
 | `localeParam`     | `locale`            | The param to set within your `pattern` to replace with a `locale`.                    |
 | `defaultLocale`   | `null`              | The default locale that will be used in the main `loc` value for a `url`.             |
 
@@ -105,14 +107,18 @@ in your routes.
 
 * `addRoute(route)` - Method to use for adding additional urls after the initial `ContentfulSitemap` instance has been created.
 
-* `toXML((xml, err) => {})` - The magic✨ Call this method when you want to generate your sitemap.
+* `buildRoutes()` - The magic✨ Call this method when you want to generate your Contentful routes to be passed to `sitemap`.
+
+* `toXML((xml, err) => {})` - __*DEPRECATED*__ - This was the previous method that this class used to build and return the full `sitemap.xml` string, but due to changes made to the `sitemap` package it seemed like it would be easier to support the current—and future—versions of that package by simplifying this package to do one thing well, while offering more flexibility with how you would like to use `sitemap` to generate your sitemap(s).
 
 ## Example
 
 ```js
 const express = require('express');
 const contentful = require('contentful');
-const ContentfulSitemap = require('contentful-sitemap');
+const { SitemapStream, streamToPromise } = require('sitemap');
+const { createGzip } = require('zlib');
+const { ContentfulSitemap } = require('contentful-sitemap');
 
 const app = express();
 
@@ -121,7 +127,7 @@ const client = contentful.createClient({
   space: '[SPACE_ID]',
 });
 
-const sitemap = new ContentfulSitemap([
+const sitemapGenerator = new ContentfulSitemap(client, [
   {
     pattern: '/',
     id: '[HOME_PAGE_ID]',
@@ -139,6 +145,7 @@ const sitemap = new ContentfulSitemap([
     pattern: '/news/:slug',
     priority: 0.5,
     query: {
+      content_type: '[CONTENTFUL_MODEL_TYPE (e.g. `newsArticlePage`)]',
       select: 'fields.slug',
     },
     params: {
@@ -153,17 +160,41 @@ const sitemap = new ContentfulSitemap([
     url: '/privacy',
     priority: 0.3,
   }
-], client);
+]);
+
+let sitemap;
 
 app.get('/sitemap.xml', (req, res) => {
-  sitemap.toXML((xml, err) => {
-    if (err) {
-      return res.status(500).end();
-    }
+  res.header('Content-Type', 'application/xml');
+  res.header('Content-Encoding', 'gzip');
 
-    res.header('Content-Type', 'application/xml');
-    res.send(xml);
-  });
+  if (sitemap) {
+    return res.send(sitemap);
+  }
+
+  try {
+    const smStream = new SitemapStream({ hostname: 'https://example.com/' });
+    const pipeline = smStream.pipe(createGzip());
+
+    return sitemapGenerator.buildRoutes()
+      .then(routes => {
+        // pipe your entries or directly write them.
+        routes.forEach(route => smStream.write(route));
+        smStream.end()
+
+        // cache the response
+        streamToPromise(pipeline).then(sm => sitemap = sm)
+        // stream write the response
+        pipeline.pipe(res).on('error', (e) => {throw e})
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(500).end();
+      });
+  } catch (e) {
+    console.error(e)
+    res.status(500).end()
+  }
 });
 
 ...
