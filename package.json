@@ -50,13 +50,13 @@
     "contentful": ">=7.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.10.3",
+    "@babel/runtime": "^7.10.4",
     "invariant": "^2.2.4",
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",
     "path-to-regexp": "^6.1.0",
     "sitemap": "^6.1.7",
-    "snyk": "^1.352.1"
+    "snyk": "^1.355.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
