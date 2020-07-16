@@ -56,14 +56,14 @@
     "lodash.has": "^4.5.2",
     "path-to-regexp": "^6.1.0",
     "sitemap": "^6.1.7",
-    "snyk": "^1.361.3"
+    "snyk": "^1.362.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.4",
-    "@babel/core": "^7.10.4",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.10.4",
-    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.1.0",
