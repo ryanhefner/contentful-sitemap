@@ -55,6 +55,7 @@
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",
     "path-to-regexp": "^6.1.0",
+    "rollup-plugin-terser": "^6.1.0",
     "sitemap": "^6.1.7",
     "snyk": "^1.364.2"
   },
@@ -83,7 +84,6 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-uglify": "^6.0.4",
     "typescript": "^3.9.7"
   },
   "jest": {
