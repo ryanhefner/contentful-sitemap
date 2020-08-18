@@ -55,9 +55,8 @@
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",
     "path-to-regexp": "^6.1.0",
-    "rollup-plugin-terser": "^6.1.0",
     "sitemap": "^6.1.7",
-    "snyk": "^1.372.0"
+    "snyk": "^1.377.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
@@ -67,7 +66,7 @@
     "@babel/plugin-transform-runtime": "^7.11.0",
     "@babel/preset-env": "^7.11.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^26.2.2",
+    "babel-jest": "^26.3.0",
     "babel-plugin-dev-expression": "^0.2.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "babel-polyfill": "^6.26.0",
@@ -76,14 +75,15 @@
     "dtslint": "^3.6.14",
     "greenkeeper-lockfile": "^1.15.1",
     "gzip-size": "^5.1.1",
-    "jest": "^26.2.2",
+    "jest": "^26.4.0",
     "pretty-bytes": "^5.3.0",
     "regenerator-runtime": "^0.13.7",
-    "rollup": "^2.23.1",
+    "rollup": "^2.26.3",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.0",
     "typescript": "^3.9.7"
   },
   "jest": {
