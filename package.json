@@ -57,7 +57,7 @@
     "path-to-regexp": "^6.1.0",
     "rollup-plugin-terser": "^6.1.0",
     "sitemap": "^6.1.7",
-    "snyk": "^1.370.1"
+    "snyk": "^1.372.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.5",
