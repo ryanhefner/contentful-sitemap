@@ -55,7 +55,7 @@
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",
     "path-to-regexp": "^6.1.0",
-    "sitemap": "^6.1.7",
+    "sitemap": "^6.3.0",
     "snyk": "^1.389.0"
   },
   "devDependencies": {
