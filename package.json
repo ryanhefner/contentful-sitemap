@@ -54,7 +54,7 @@
     "invariant": "^2.2.4",
     "lodash.get": "^4.4.2",
     "lodash.has": "^4.5.2",
-    "path-to-regexp": "^6.1.0",
+    "path-to-regexp": "^6.2.0",
     "sitemap": "^6.3.2",
     "snyk": "^1.400.0"
   },
