@@ -90,9 +90,6 @@ your `routes` entries.
 ### Default Options
 
 The following options can be used to customize the way your sitemap is generated.
-The one option that you’ll definitely want to set, if not defined in your `routes`
-is the `origin` option, which is prefixed before the `url`s and `pattern`s defined
-in your routes.
 
 | Name              | Default             | Description                                                                           |
 | ----------------- | ------------------- | ------------------------------------------------------------------------------------- |
